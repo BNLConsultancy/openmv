@@ -385,6 +385,8 @@ FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/,\
 	modutime.o              \
 	modusocket.o            \
 	modnetwork.o            \
+	network_wiznet5k.o		\
+	modnwwiznet5k.o			\
 	modmachine.o            \
 	machine_i2c.o           \
 	machine_spi.o           \
@@ -552,6 +554,16 @@ FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/drivers/,\
 	memory/spiflash.o   \
 	)
 
+ifneq ($(MICROPY_PY_WIZNET5K),0)
+WIZNET5K_DIR=drivers/wiznet5k
+SRC_MOD += network_wiznet5k.o modnwwiznet5k.o
+FIRM_OBJ += $(addprefix $(BUILD)/$(MICROPY_DIR)/$(WIZNET5K_DIR)/,\
+	ethernet/w$(MICROPY_PY_WIZNET5K)/w$(MICROPY_PY_WIZNET5K).o \
+	ethernet/wizchip_conf.o \
+	ethernet/socket.o \
+	internet/dns/dns.o \
+	)
+endif
 
 ifeq ($(CUBEAI), 1)
 include $(TOP_DIR)/stm32cubeai/cube.mk
